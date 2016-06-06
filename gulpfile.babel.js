@@ -2,6 +2,7 @@ import gulp         from 'gulp';
 import browserify   from 'browserify';
 import vsource      from 'vinyl-source-stream';
 import babelify     from 'babelify';
+import tsify        from 'tsify';
 import browserSync  from 'browser-sync';
 import stylus       from 'gulp-stylus';
 import postStylus   from 'poststylus';
@@ -42,7 +43,8 @@ gulp.task('es6:angular', () => {
   return browserify({
     entries: './src/js/app.js',
     debug: true
-  }).transform(babelify)
+  }).plugin(tsify, {target: 'es6'})
+    .transform(babelify)
     .bundle()
     .on('error', onError)
     .pipe(vsource('app.js'))
