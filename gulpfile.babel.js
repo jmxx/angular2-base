@@ -16,7 +16,7 @@ const reload = (done) => {
 };
 
 const onError = function (err) {
-  console.log(err.stack);
+  console.log(err);
   this.emit('end');
 };
 
@@ -41,10 +41,10 @@ gulp.task('html', () => {
 
 gulp.task('es6:angular', () => {
   return browserify({
-    entries: './src/js/app.js',
+    entries: './src/js/app.ts',
     debug: true
-  }).plugin(tsify, {target: 'es6'})
-    .transform(babelify)
+  }).plugin(tsify)
+    .transform(babelify, {extensions: ['.tsx', '.ts']})
     .bundle()
     .on('error', onError)
     .pipe(vsource('app.js'))
@@ -67,7 +67,7 @@ gulp.task('watch:html', () => {
 });
 
 gulp.task('watch:es6', () => {
-  return gulp.watch('./src/js/**/*.js', gulp.series('es6:angular', reload));
+  return gulp.watch('./src/js/**/*.{js,ts}', gulp.series('es6:angular', reload));
 });
 
 gulp.task('watch', gulp.parallel('watch:html', 'watch:es6', 'watch:stylus'));
