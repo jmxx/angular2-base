@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { FormComponent } from './form.component';
+
 export class Hero {
   id: number;
   name: string;
@@ -7,7 +9,15 @@ export class Hero {
 
 @Component({
   selector: 'hello-app',
-  template: '<p>{{ message }}</p>'
+  template: `
+    <div>
+      <p>{{ message }}</p>
+      <form-component></form-component>
+    </div>
+  `,
+  directives: [
+    FormComponent
+  ]
 })
 export class HelloApp {
   message : string  = '';

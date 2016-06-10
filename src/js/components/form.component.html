@@ -1,0 +1,18 @@
+<form [ngFormModel]="form" (ngSubmit)="onSubmit(form.value)">
+  <div class="form-group">
+    <input type="text" id="username" [ngFormControl]="form.controls.username">
+    <label for="username"></label>
+    <span *ngIf="!form.controls.username?.valid">* Required</span>
+  </div>
+  <div class="form-group">
+    <input type="text" id="password" [ngFormControl]="form.controls.password">
+    <label for="password"></label>
+    <span *ngIf="!form.controls.password?.valid">* Required</span>
+  </div>
+  <form-input id="name" label="Etiqueta" [ngFormControl]="form.controls.name" [(ngModel)]="name"></form-input>
+  {{ name }}
+  <span *ngIf="form.valid">Valid form</span>
+  <div class="form-group">
+    <button type="submit" class="btn" [disabled]="!form.valid">Enviar</button>
+  </div>
+</form>

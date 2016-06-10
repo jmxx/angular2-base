@@ -1,0 +1,12 @@
+<div class="Form-control">
+  <input #input="ngForm"
+         class="Input"
+         type="{{ type }}"
+         id="{{ id }}_input"
+         (keyup)="onKeyup($event)"
+         [(ngModel)]="value"
+         [ngClass]="inputClasses"
+  >
+  <label attr.for="{{ id }}_input" class="Label">{{ label }} {{ value }}</label>
+  <span *ngIf="!ngFormControl?.valid">* Required</span>
+</div>
