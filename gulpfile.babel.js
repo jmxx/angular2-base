@@ -3,6 +3,7 @@ import browserify   from 'browserify';
 import vsource      from 'vinyl-source-stream';
 import babelify     from 'babelify';
 import tsify        from 'tsify';
+import stringify    from 'stringify';
 import browserSync  from 'browser-sync';
 import stylus       from 'gulp-stylus';
 import postStylus   from 'poststylus';
@@ -45,6 +46,7 @@ gulp.task('es6:angular', () => {
     debug: true
   }).plugin(tsify)
     .transform(babelify, {extensions: ['.tsx', '.ts']})
+    .transform(stringify, {appliesTo: {includeExtensions: ['.html']}})
     .bundle()
     .on('error', onError)
     .pipe(vsource('app.js'))
@@ -63,11 +65,11 @@ gulp.task('watch:stylus', () => {
 });
 
 gulp.task('watch:html', () => {
-  return gulp.watch('./src/**/*.html', gulp.series('html', reload));
+  return gulp.watch('./src/index.html', gulp.series('html', reload));
 });
 
 gulp.task('watch:es6', () => {
-  return gulp.watch('./src/js/**/*.{js,ts}', gulp.series('es6:angular', reload));
+  return gulp.watch('./src/js/**/*.{js,ts,html}', gulp.series('es6:angular', reload));
 });
 
 gulp.task('watch', gulp.parallel('watch:html', 'watch:es6', 'watch:stylus'));
